@@ -2,6 +2,9 @@ import customtkinter
 import pandas as pd
 import qrcode
 from gui import Button, Entry
+from PIL import Image, ImageWin
+import win32print
+import win32ui
 
 customtkinter.set_appearance_mode("light")
 
@@ -9,7 +12,7 @@ customtkinter.set_appearance_mode("light")
 class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
-        self.title("GSN - QR Code Generator")
+        self.title("GSN - QR Code Generator v0.1")
         self.geometry("600x400")
         self.resizable(False, False)
         self.user_entry = Entry(self, placeholder_text="Username")
@@ -37,6 +40,8 @@ class App(customtkinter.CTk):
     def clear_entries(self):
         self.user_entry.delete(0, "end")
         self.password_entry.delete(0, "end")
+
+    def
 
 
 
