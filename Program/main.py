@@ -14,7 +14,7 @@ class App(customtkinter.CTk):
         self.resizable(False, False)
         self.user_entry = Entry(self, placeholder_text="Username")
         self.user_entry.pack(pady=20)
-        self.password_entry = Entry(self, placeholder_text="Password")
+        self.password_entry = Entry(self, placeholder_text="Password", show="*")
         self.password_entry.pack(pady=20)
         self.generate_button = Button(self, text="Generate QR Code", command=self.generate_qr_code)
         self.generate_button.pack(pady=20)
@@ -31,7 +31,7 @@ class App(customtkinter.CTk):
         qr.add_data(qr_data)
         qr.make(fit=True)
         img = qr.make_image(fill='black', back_color='white')
-        img.save(f"{user_text}.png")
+        img.save(f"QR_Codes/{user_text}.png")
         self.clear_entries()
 
     def clear_entries(self):
