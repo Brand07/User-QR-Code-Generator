@@ -2,7 +2,7 @@ import customtkinter
 import pandas as pd
 import qrcode
 from gui import Button, Entry
-from PIL import Image, ImageWin
+from PIL import Image, ImageWin, ImageTk
 import win32print
 import win32ui
 
@@ -13,7 +13,7 @@ class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
         self.title("GSN - QR Code Generator v0.1")
-        self.geometry("600x400")
+        self.geometry("600x450")
         self.resizable(False, False)
         self.user_entry = Entry(self, placeholder_text="Username")
         self.user_entry.pack(pady=20)
@@ -21,6 +21,14 @@ class App(customtkinter.CTk):
         self.password_entry.pack(pady=20)
         self.generate_button = Button(self, text="Generate QR Code", command=self.generate_qr_code)
         self.generate_button.pack(pady=20)
+        self.label_width = 150
+        self.label_height = 150
+
+        #Display the QR Code Image
+        self.qr_label = customtkinter.CTkLabel(self, text="")
+        self.qr_label.pack()
+
+
 
     def generate_qr_code(self):
         user_text = self.user_entry.get()
@@ -37,11 +45,32 @@ class App(customtkinter.CTk):
         img.save(f"QR_Codes/{user_text}.png")
         self.clear_entries()
 
+        self.print_image(f"QR_Codes/{user_text}.png", self.label_width, self.label_height)
+        img_tk = ImageTk.PhotoImage(img)
+        self.qr_label.configure(image=img_tk)
+        self.qr_label.image = img_tk
     def clear_entries(self):
         self.user_entry.delete(0, "end")
         self.password_entry.delete(0, "end")
 
-    def
+    def print_image(self, file_name, label_width, label_height):
+        printer_name = win32print.GetDefaultPrinter()
+        hDC = win32ui.CreateDC()
+        hDC.CreatePrinterDC(printer_name)
+
+        # Define the label size in pixels
+        label_size = (label_width, label_height)
+
+        bmp = Image.open(file_name)
+        bmp = bmp.resize(label_size, Image.LANCZOS)
+
+        hDC.StartDoc(file_name)
+        hDC.StartPage()
+        dib = ImageWin.Dib(bmp)
+        dib.draw(hDC.GetHandleOutput(), (0, 0, label_size[0], label_size[1]))
+        hDC.EndPage()
+        hDC.EndDoc()
+        hDC.DeleteDC()
 
 
 
