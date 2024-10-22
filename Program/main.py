@@ -23,8 +23,9 @@ class App(customtkinter.CTk):
         user_text = self.user_entry.get()
         if user_text == "":
             print("Username is required.")
-
         password_text = self.password_entry.get()
+        if password_text == "":
+            print("Password is required.")
         qr_data = f"{user_text}\t{password_text}\t\t\t"
         qr = qrcode.QRCode(version=1, box_size=10, border=5)
         qr.add_data(qr_data)
