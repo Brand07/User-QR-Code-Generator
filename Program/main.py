@@ -21,13 +21,22 @@ class App(customtkinter.CTk):
 
     def generate_qr_code(self):
         user_text = self.user_entry.get()
+        if user_text == "":
+            print("Username is required.")
+
         password_text = self.password_entry.get()
         qr_data = f"{user_text}\t{password_text}\t\t\t"
         qr = qrcode.QRCode(version=1, box_size=10, border=5)
         qr.add_data(qr_data)
         qr.make(fit=True)
         img = qr.make_image(fill='black', back_color='white')
-        img.save("qrcode.png")
+        img.save(f"{user_text}.png")
+        self.clear_entries()
+
+    def clear_entries(self):
+        self.user_entry.delete(0, "end")
+        self.password_entry.delete(0, "end")
+
 
 
 
