@@ -44,16 +44,19 @@ class App(customtkinter.CTk):
         img = qr.make_image(fill='black', back_color='white')
         img.save(f"QR_Codes/{user_text}.png")
         self.clear_entries()
-
+        # Send the generated QR Code to the printer
         self.print_image(f"QR_Codes/{user_text}.png", self.label_width, self.label_height)
         img_tk = ImageTk.PhotoImage(img)
+        #Display the QR Code in the GUI
         self.qr_label.configure(image=img_tk)
         self.qr_label.image = img_tk
     def clear_entries(self):
+        """Clears the username and password entry fields"""
         self.user_entry.delete(0, "end")
         self.password_entry.delete(0, "end")
 
     def print_image(self, file_name, label_width, label_height):
+        """Prints the image to the default Windows printer"""
         printer_name = win32print.GetDefaultPrinter()
         hDC = win32ui.CreateDC()
         hDC.CreatePrinterDC(printer_name)
