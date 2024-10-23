@@ -57,23 +57,27 @@ class App(customtkinter.CTk):
 
     def print_image(self, file_name, label_width, label_height):
         """Prints the image to the default Windows printer"""
-        printer_name = win32print.GetDefaultPrinter()
-        hDC = win32ui.CreateDC()
-        hDC.CreatePrinterDC(printer_name)
+        try:
+            printer_name = win32print.GetDefaultPrinter()
+            hDC = win32ui.CreateDC()
+            hDC.CreatePrinterDC(printer_name)
 
-        # Define the label size in pixels
-        label_size = (label_width, label_height)
+            # Define the label size in pixels
+            label_size = (label_width, label_height)
 
-        bmp = Image.open(file_name)
-        bmp = bmp.resize(label_size, Image.LANCZOS)
+            bmp = Image.open(file_name)
+            bmp = bmp.resize(label_size, Image.LANCZOS)
 
-        hDC.StartDoc(file_name)
-        hDC.StartPage()
-        dib = ImageWin.Dib(bmp)
-        dib.draw(hDC.GetHandleOutput(), (0, 0, label_size[0], label_size[1]))
-        hDC.EndPage()
-        hDC.EndDoc()
-        hDC.DeleteDC()
+            hDC.StartDoc(file_name)
+            hDC.StartPage()
+            dib = ImageWin.Dib(bmp)
+            dib.draw(hDC.GetHandleOutput(), (0, 0, label_size[0], label_size[1]))
+            hDC.EndPage()
+            hDC.EndDoc()
+            hDC.DeleteDC()
+        except Exception as e:
+            print(f"Error printing image: {e}")
+            pass
 
 
 
