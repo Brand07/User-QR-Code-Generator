@@ -12,8 +12,8 @@ customtkinter.set_appearance_mode("light")
 class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
-        self.title("GSN - QR Code Generator v0.1")
-        self.geometry("600x500")
+        self.title("GSN - QR Code Generator v0.2")
+        self.geometry("800x600")
         self.resizable(False, False)
         self.user_entry = Entry(self, placeholder_text="Username")
         self.user_entry.pack(pady=20)
@@ -30,7 +30,7 @@ class App(customtkinter.CTk):
 
         #Display the QR Code Image
         self.qr_label = customtkinter.CTkLabel(self, text="")
-        self.qr_label.pack()
+        self.qr_label.pack(pady=(0, 20))
 
 
 
