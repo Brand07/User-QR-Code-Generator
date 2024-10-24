@@ -1,3 +1,5 @@
+import os.path
+
 import customtkinter
 import pandas as pd
 import qrcode
@@ -5,6 +7,8 @@ from gui import Button, Entry
 from PIL import Image, ImageWin, ImageTk
 import win32print
 import win32ui
+import logging
+
 
 customtkinter.set_appearance_mode("light")
 
@@ -12,6 +16,14 @@ customtkinter.set_appearance_mode("light")
 class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
+
+        #Check if the QR_Codes folder exists
+        if not os.path.exists("QR_Codes"):
+            os.makedirs("QR_Codes")
+            print("QR_Codes folder created.")
+        else:
+            print("QR_Codes folder already exists.")
+
         self.title("GSN - QR Code Generator v0.2")
         self.geometry("800x600")
         self.resizable(False, False)
@@ -25,7 +37,6 @@ class App(customtkinter.CTk):
         self.generate_button.pack(pady=20)
         self.label_width = 150
         self.label_height = 150
-
 
 
         #Display the QR Code Image
@@ -46,7 +57,11 @@ class App(customtkinter.CTk):
         qr.add_data(qr_data)
         qr.make(fit=True)
         img = qr.make_image(fill='black', back_color='white')
-        img.save(f"QR_Codes/{user_text}.png")
+        try:
+            img.save(f"QR_Codes/{user_text}.png")
+        except Exception as e:
+            print(f"Error saving image: {e}")
+            pass
         self.clear_entries()
 
         if self.print_option.get() == 1:
