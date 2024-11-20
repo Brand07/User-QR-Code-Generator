@@ -24,7 +24,7 @@ class App(customtkinter.CTk):
         else:
             print("QR_Codes folder already exists.")
 
-        self.title("GSN - QR Code Generator v0.2")
+        self.title("QR Code Generator v0.2")
         self.geometry("800x600")
         self.resizable(False, False)
         self.user_entry = Entry(self, placeholder_text="Username")
