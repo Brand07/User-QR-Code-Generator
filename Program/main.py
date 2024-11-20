@@ -1,7 +1,6 @@
 import os.path
 
 import customtkinter
-import pandas as pd
 import qrcode
 from gui import Button, Entry
 from PIL import Image, ImageWin, ImageTk
